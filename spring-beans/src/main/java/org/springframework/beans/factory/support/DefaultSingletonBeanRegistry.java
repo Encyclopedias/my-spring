@@ -81,7 +81,7 @@ public class DefaultSingletonBeanRegistry extends SimpleAliasRegistry implements
 	private final Map<String, ObjectFactory<?>> singletonFactories = new HashMap<>(16);
 
 	/** Cache of early singleton objects: bean name to bean instance. */
-	private final Map<String, Object> earlySingletonObjects = new ConcurrentHashMap<>(16);
+	//private final Map<String, Object> earlySingletonObjects = new ConcurrentHashMap<>(16);
 
 	/** Set of registered singletons, containing the bean names in registration order. */
 	private final Set<String> registeredSingletons = new LinkedHashSet<>(256);
@@ -138,7 +138,7 @@ public class DefaultSingletonBeanRegistry extends SimpleAliasRegistry implements
 		synchronized (this.singletonObjects) {
 			this.singletonObjects.put(beanName, singletonObject);
 			this.singletonFactories.remove(beanName);
-			this.earlySingletonObjects.remove(beanName);
+			//this.earlySingletonObjects.remove(beanName);
 			this.registeredSingletons.add(beanName);
 		}
 	}
@@ -156,7 +156,7 @@ public class DefaultSingletonBeanRegistry extends SimpleAliasRegistry implements
 		synchronized (this.singletonObjects) {
 			if (!this.singletonObjects.containsKey(beanName)) {
 				this.singletonFactories.put(beanName, singletonFactory);
-				this.earlySingletonObjects.remove(beanName);
+				//this.earlySingletonObjects.remove(beanName);
 				this.registeredSingletons.add(beanName);
 			}
 		}
@@ -181,20 +181,21 @@ public class DefaultSingletonBeanRegistry extends SimpleAliasRegistry implements
 		// Quick check for existing instance without full singleton lock
 		Object singletonObject = this.singletonObjects.get(beanName);
 		if (singletonObject == null && isSingletonCurrentlyInCreation(beanName)) {
-			singletonObject = this.earlySingletonObjects.get(beanName);
+			//singletonObject = this.earlySingletonObjects.get(beanName);
 			if (singletonObject == null && allowEarlyReference) {
 				synchronized (this.singletonObjects) {
 					// Consistent creation of early reference within full singleton lock
 					singletonObject = this.singletonObjects.get(beanName);
 					if (singletonObject == null) {
-						singletonObject = this.earlySingletonObjects.get(beanName);
-						if (singletonObject == null) {
+					//	singletonObject = this.earlySingletonObjects.get(beanName);
+						//if (singletonObject == null) {
 							ObjectFactory<?> singletonFactory = this.singletonFactories.get(beanName);
 							if (singletonFactory != null) {
 								singletonObject = singletonFactory.getObject();
-								this.earlySingletonObjects.put(beanName, singletonObject);
+							//	this.earlySingletonObjects.put(beanName, singletonObject);
+								this.singletonObjects.put(beanName, singletonObject);
 								this.singletonFactories.remove(beanName);
-							}
+							//}
 						}
 					}
 				}
@@ -291,7 +292,7 @@ public class DefaultSingletonBeanRegistry extends SimpleAliasRegistry implements
 		synchronized (this.singletonObjects) {
 			this.singletonObjects.remove(beanName);
 			this.singletonFactories.remove(beanName);
-			this.earlySingletonObjects.remove(beanName);
+			//this.earlySingletonObjects.remove(beanName);
 			this.registeredSingletons.remove(beanName);
 		}
 	}
@@ -535,7 +536,7 @@ public class DefaultSingletonBeanRegistry extends SimpleAliasRegistry implements
 		synchronized (this.singletonObjects) {
 			this.singletonObjects.clear();
 			this.singletonFactories.clear();
-			this.earlySingletonObjects.clear();
+			//this.earlySingletonObjects.clear();
 			this.registeredSingletons.clear();
 			this.singletonsCurrentlyInDestruction = false;
 		}

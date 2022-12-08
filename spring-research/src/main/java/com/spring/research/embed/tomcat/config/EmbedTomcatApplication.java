@@ -12,7 +12,7 @@ import java.io.File;
 public class EmbedTomcatApplication {
 	public static void run() {
 		Tomcat tomcat = new Tomcat();
-		tomcat.setPort(8083);
+		tomcat.setPort(8080);
 		tomcat.getConnector();
 		//获取指定的绝对路径获取上下文
 		Context context = tomcat.addWebapp("/", new File("src/main/webapp").getAbsolutePath());

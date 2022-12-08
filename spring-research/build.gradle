@@ -16,5 +16,7 @@ dependencies {
     implementation(project(":spring-context"))
     implementation ("org.apache.tomcat.embed:tomcat-embed-core:8.5.33")
     implementation ("org.apache.tomcat.embed:tomcat-embed-jasper:8.5.33")
-    }
+    runtimeOnly 'org.aspectj:aspectjrt:1.9.7'
+    implementation group: 'org.aspectj', name: 'aspectjweaver', version: '1.9.7'
+}
 
